@@ -5,13 +5,19 @@ export interface User {
 }
 @Injectable()
 export class TasksService {
-  private tasks = [];
+  private tasks: { id: number; title: string; description: string }[] = [];
   getTasks() {
     return this.tasks;
   }
-  createTasks(task: any) {
+  getTask(id: number) {
+    return this.tasks.find((task) => task.id === id);
+  }
+  createTasks(task: CreateTaskDto) {
     console.log(task);
-    this.tasks.push(task);
+    this.tasks.push({
+      ...task,
+      id: this.tasks.length + 1,
+    });
     return task;
   }
 }
